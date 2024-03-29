@@ -1,24 +1,4 @@
-<template>
-  <main
-    class=" text-gray-800 dark:text-white relative flex flex-col min-h-screen py-10"
-  >
-    <div class="lg:grid lg:grid-cols-3 lg:gap-4 lg:w-full ">
-        <Leaderboard class="max-w-[36rem] mb-16 mx-auto lg:mx-0" title="Home Runs" statKey="HR" :sortedList="sortedByHR"/>
-        <Leaderboard class="max-w-[36rem] mb-16 mx-auto lg:mx-0" title="Stolen Bases" statKey="SB" :sortedList="sortedBySB"/>
-        <Leaderboard class="max-w-[36rem] mx-auto lg:mx-0" title="Strikeouts" statKey="SO" :sortedList="sortedBySO"/>
-    </div>
-  </main>
-</template>
-
-<script setup>
-
-//import { Leaderboard } from 'Leaderboard.vue';
-const { data: pageVisits } = await useFetch(() => `/api/kv-demo`)
-const refreshPage = () => {
-  window.location.reload()
-}
-
-const picks = [
+[
 { "manager": "Kenny", "picks": [
 { "stat": "HR", "players": [
 { "name": "Bryce Harper", "key_mlbam": "547180", "team_id": "PHI", "price": 29 },
@@ -364,59 +344,4 @@ const picks = [
 ] }
 ] }
 
-];
-
-
-const getStatsForLeague = ( async () => {
-  const tmpStats = {};
-  let mlbResponse = await useFetch('https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting,pitching&playerPool=all&sportId=1&limit=5000');
-  let hitters = mlbResponse.data.value.stats.find( x => x.group.displayName === 'hitting' ).splits;
-  let pitchers = mlbResponse.data.value.stats.find( x => x.group.displayName === 'pitching' ).splits;
-
-  for ( let hitter of hitters ) {
-    let player = tmpStats[hitter.player.id];
-    if (!player) {
-      player = { HR: 0, SB: 0, SO: 0 };
-    }
-    player.HR += hitter.stat.homeRuns;
-    player.SB += hitter.stat.stolenBases;
-    tmpStats[hitter.player.id] = player;
-  }
-  for ( let pitcher of pitchers ) {
-    let player = tmpStats[pitcher.player.id];
-    if (!player) {
-      player = { HR: 0, SB: 0, SO: 0 };
-    }
-    player.SO += pitcher.stat.strikeOuts;
-    tmpStats[pitcher.player.id] = player;
-  }
-  return tmpStats;
-});
-
-const statsHash = await getStatsForLeague();
-for ( let entry of picks ) {
-  for ( let pick of entry.picks ) {
-    for ( let player of pick.players ) {
-      player.HR = statsHash[player.key_mlbam]?.HR;
-      player.SB = statsHash[player.key_mlbam]?.SB;
-      player.SO = statsHash[player.key_mlbam]?.SO;
-    }
-    pick.players = pick.players.sort( (a,b) => {
-      if ( a[pick.stat] === undefined && b[pick.stat] === undefined) {
-        return 0;
-      }
-      if ( a[pick.stat] === undefined ) {
-        return 999;
-      }
-      if ( b[pick.stat] === undefined ) {
-        return -999;
-      }
-      return b[pick.stat] - a[pick.stat];
-    });
-    pick.total = pick.players.reduce( (a,c) => a + ( c[pick.stat] || 0), 0);
-  }
-}
-const sortedByHR = [...picks].sort( (a,b) => b.picks.find( x => x.stat === 'HR').total - a.picks.find( x => x.stat === 'HR').total );
-const sortedBySB = [...picks].sort( (a,b) => b.picks.find( x => x.stat === 'SB').total - a.picks.find( x => x.stat === 'SB').total );
-const sortedBySO = [...picks].sort( (a,b) => b.picks.find( x => x.stat === 'SO').total - a.picks.find( x => x.stat === 'SO').total );
-</script>
+]
