@@ -25,7 +25,7 @@
         <th class="text-left">Player</th>
         <th class="text-center w-16">Price</th>
         <th class="text-center w-16">{{statKey}}</th>
-        <th class="w-8"></th>
+        <th class="w-10"></th>
       </tr>
       <tr v-for="player of entry.picks.filter( x => x.stat === statKey)[0].players">
         <td>{{ player.name }}</td>
