@@ -360,10 +360,61 @@ const picks = [
 
 ];
 
+const getDayToUseForToday = ( async () => {
+  const scheduleURL = 'https://statsapi.mlb.com/api/v1/schedule?sportId=1';
+  let scheduleResponse = (await useFetch(scheduleURL)).data.value;
+  if (allGamesFinished(scheduleResponse)) {
+    return new Date(scheduleResponse.dates[0].date);
+  }
+  let d = new Date(scheduleResponse.dates[0].date);
+  d.setDate(-1)
+  return d;
+});
 
-const getStatsForLeague = ( async () => {
+function allGamesFinished( scheduleResponse ) {
+  let unfinishedStatuses = [
+        'I',  // In Progress
+        'P',  // Preview
+        'M',  // Manager Challenge
+        'N',  // Umpire Review
+        'O',  // Game Over (different from Final)
+        'S',  // Scheduled
+        'W',  // Writing (not sure about usage, excluding to be safe)
+        'X',  // Other/Unknown (not sure about usage, excluding to be safe)
+    ];
+  for (let date of scheduleResponse.dates) {
+      for (let game of date.games) {
+          //console.error(`${game.gamePk} - ${game.status.codedGameState}`);
+          if (unfinishedStatuses.indexOf(game.status.codedGameState) > -1) {
+              //console.log(game.gamePk);
+              return false;
+          }
+      }
+  }
+  return true;
+}
+
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    
+    return `${year}-${month}-${day}`;
+}
+
+const getStatsForLeague = ( async (params) => {
   const tmpStats = {};
-  let mlbResponse = await useFetch('https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting,pitching&playerPool=all&sportId=1&limit=5000');
+  let url = '';
+  if (params?.daily) {
+    let date = new Date(); //await getDayToUseForToday();
+    let dateStr = formatDate(date);
+    url = `https://statsapi.mlb.com/api/v1/stats?startDate=${dateStr}&endDate=${dateStr}&stats=BY_DATE_RANGE&group=hitting,pitching&playerPool=all&sportId=1&limit=5000`;
+    console.log(url);
+  }
+  else {
+    url = `https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting,pitching&playerPool=all&sportId=1&limit=5000`;
+  }
+  let mlbResponse = await useFetch(url);
   let hitters = mlbResponse.data.value.stats.find( x => x.group.displayName === 'hitting' ).splits;
   let pitchers = mlbResponse.data.value.stats.find( x => x.group.displayName === 'pitching' ).splits;
 
@@ -388,26 +439,34 @@ const getStatsForLeague = ( async () => {
 });
 
 const statsHash = await getStatsForLeague();
+const dailyStatsHash = await getStatsForLeague({ daily: true });
+
 for ( let entry of picks ) {
   for ( let pick of entry.picks ) {
     for ( let player of pick.players ) {
-      player.HR = statsHash[player.key_mlbam]?.HR;
-      player.SB = statsHash[player.key_mlbam]?.SB;
-      player.SO = statsHash[player.key_mlbam]?.SO;
+      player.season = player.season || {};
+      player.today = player.today || {};
+      player.season.HR = statsHash[player.key_mlbam]?.HR;
+      player.season.SB = statsHash[player.key_mlbam]?.SB;
+      player.season.SO = statsHash[player.key_mlbam]?.SO;
+      player.today.HR = dailyStatsHash[player.key_mlbam]?.HR;
+      player.today.SB = dailyStatsHash[player.key_mlbam]?.SB;
+      player.today.SO = dailyStatsHash[player.key_mlbam]?.SO;
     }
     pick.players = pick.players.sort( (a,b) => {
-      if ( a[pick.stat] === undefined && b[pick.stat] === undefined) {
+      if ( a.season[pick.stat] === undefined && b.season[pick.stat] === undefined) {
         return 0;
       }
-      if ( a[pick.stat] === undefined ) {
+      if ( a.season[pick.stat] === undefined ) {
         return 999;
       }
-      if ( b[pick.stat] === undefined ) {
+      if ( b.season[pick.stat] === undefined ) {
         return -999;
       }
-      return b[pick.stat] - a[pick.stat];
+      return b.season[pick.stat] - a.season[pick.stat];
     });
-    pick.total = pick.players.reduce( (a,c) => a + ( c[pick.stat] || 0), 0);
+    pick.total = pick.players.reduce( (a,c) => a + ( c.season[pick.stat] || 0), 0);
+    pick.todayTotal = pick.players.reduce( (a,c) => a + ( c.today[pick.stat] || 0), 0);
   }
 }
 const sortedByHR = [...picks].sort( (a,b) => b.picks.find( x => x.stat === 'HR').total - a.picks.find( x => x.stat === 'HR').total );
