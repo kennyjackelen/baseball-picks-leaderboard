@@ -8,7 +8,7 @@
       <ChevronDoubleDownIcon class="h-6 w-6 mr-2 inline" v-else />
       {{ entry.manager }}
     </div>
-    <div class="text-xs font-normal text-right">
+    <div class="text-sm font-normal text-right">
       <span class="pt-2 inline-block text-[#59D185] text-xs font-normal my-auto" v-if="entry.picks.find( x => x.stat === statKey)?.todayTotal">
       +{{ entry.picks.find( x => x.stat === statKey)?.todayTotal }} today
       </span>
@@ -19,19 +19,29 @@
       </div>
     </div>
   </div>
-  <div class="m-2 pb-2 w-full" v-if="expanded">
-    <table class="w-full">
+  <div :class="['m-2 pb-2 w-full ', expanded ? '' : 'hidden']">
+    <table class="w-full  text-xl">
       <tr>
-        <th class="text-left">Player</th>
+        <th class="text-left"></th>
+        <th class="text-left pl-1">Player</th>
         <th class="text-center w-16">Price</th>
         <th class="text-center w-16">{{statKey}}</th>
         <th class="w-8"></th>
       </tr>
       <tr v-for="player of entry.picks.filter( x => x.stat === statKey)[0].players">
-        <td>{{ player.name }}</td>
+        <td class="text-center">
+          <div class="inline-block h-18 w-12">
+            <img class="inline h-18 w-12" :src="player.imageURL">
+          </div>
+        </td>
+        <td class=" pl-1">
+          <span>
+            {{ player.name }}
+          </span>
+        </td>
         <td class="text-center">{{ player.price }}</td>
         <td class="text-center">{{ player.season[statKey] }}</td>
-        <td class="text-left text-[#59D185] text-xs" v-if="player.today[statKey]">+{{ player.today[statKey] }}</td>
+        <td class="text-left text-[#59D185] text-sm" v-if="player.today[statKey]">+{{ player.today[statKey] }}</td>
       </tr>
     </table>
   </div>
@@ -54,6 +64,7 @@ type Entry = {
             price: number;
             season: any;
             today: any;
+            imageURL: string;
         }[];
     }[];
 };

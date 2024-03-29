@@ -438,6 +438,23 @@ const getStatsForLeague = ( async (params) => {
   return tmpStats;
 });
 
+onMounted(() => {
+  for ( let entry of picks ) {
+    for ( let pick of entry.picks ) {
+      for ( let player of pick.players ) {
+        player.imageURL = `https://img.mlbstatic.com/mlb/images/players/head_shot/${player.key_mlbam}.jpg`;
+        preloadImage(player.imageURL);
+      }
+    }
+  }
+
+})
+function preloadImage(url)
+{
+    var img=new Image();
+    img.src=url;
+}
+
 const statsHash = await getStatsForLeague();
 const dailyStatsHash = await getStatsForLeague({ daily: true });
 
@@ -452,6 +469,7 @@ for ( let entry of picks ) {
       player.today.HR = dailyStatsHash[player.key_mlbam]?.HR;
       player.today.SB = dailyStatsHash[player.key_mlbam]?.SB;
       player.today.SO = dailyStatsHash[player.key_mlbam]?.SO;
+      player.imageURL = `https://img.mlbstatic.com/mlb/images/players/head_shot/${player.key_mlbam}.jpg`;
     }
     pick.players = pick.players.sort( (a,b) => {
       if ( a.season[pick.stat] === undefined && b.season[pick.stat] === undefined) {
