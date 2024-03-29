@@ -12,12 +12,6 @@
 
 <script setup>
 
-//import { Leaderboard } from 'Leaderboard.vue';
-const { data: pageVisits } = await useFetch(() => `/api/kv-demo`)
-const refreshPage = () => {
-  window.location.reload()
-}
-
 const picks = [
 { "manager": "Kenny", "picks": [
 { "stat": "HR", "players": [
