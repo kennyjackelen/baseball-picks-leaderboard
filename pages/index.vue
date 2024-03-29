@@ -408,7 +408,7 @@ const getStatsForLeague = ( async (params) => {
   if (params?.daily) {
     let date = new Date(); //await getDayToUseForToday();
     let dateStr = formatDate(date);
-    url = `https://statsapi.mlb.com/api/v1/stats?startDate=${dateStr}&endDate=${dateStr}&stats=BY_DATE_RANGE&group=hitting,pitching&playerPool=all&sportId=1&limit=5000`;
+    url = `https://statsapi.mlb.com/api/v1/stats?startDate=${dateStr}&endDate=${dateStr}&stats=byDateRange&group=hitting,pitching&playerPool=all&sportId=1&limit=5000`;
     console.log(url);
   }
   else {
