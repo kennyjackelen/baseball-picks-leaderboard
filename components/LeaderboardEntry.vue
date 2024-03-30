@@ -20,12 +20,12 @@
     </div>
   </div>
   <div :class="['m-2 pb-2 w-full ', expanded ? '' : 'hidden']">
-    <table class="w-full  text-xl">
+    <table class="w-full  text-lg">
       <tr>
         <th class="text-left"></th>
         <th class="text-left pl-1">Player</th>
-        <th class="text-center w-16">Price</th>
-        <th class="text-center w-16">{{statKey}}</th>
+        <th class="text-center w-14">Price</th>
+        <th class="text-center w-14">{{statKey}}</th>
         <th class="w-10"></th>
       </tr>
       <tr v-for="player of entry.picks.filter( x => x.stat === statKey)[0].players">
