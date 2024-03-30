@@ -7,7 +7,7 @@ async function getStatsForLeague(params: any) {
     const tmpStats : any = {};
     let url = '';
     if (params?.daily) {
-      let date = new Date(); //await getDayToUseForToday();
+      let date = await getDayToUseForToday();
       let dateStr = formatDate(date);
       url = `https://statsapi.mlb.com/api/v1/stats?startDate=${dateStr}&endDate=${dateStr}&stats=byDateRange&group=hitting,pitching&playerPool=all&sportId=1&limit=5000`;
       console.log(url);
@@ -43,13 +43,16 @@ async function getStatsForLeague(params: any) {
 
 const getDayToUseForToday = ( async () => {
     const scheduleURL = 'https://statsapi.mlb.com/api/v1/schedule?sportId=1';
-    let scheduleResponse = (await useFetch(scheduleURL)).data.value;
-    if (allGamesFinished(scheduleResponse)) {
-      return new Date(scheduleResponse.dates[0].date);
+    let scheduleResponseRaw = (await fetch(scheduleURL));
+    let scheduleResponse = await scheduleResponseRaw.json();
+    let scheduleDate = new Date(scheduleResponse.dates[0].date);
+    // use the current schedule date if any games are in progress or if all the games are finished
+    if (scheduleResponse.totalGamesInProgress > 0 || allGamesFinished(scheduleResponse)) {
+      return scheduleDate;
     }
-    let d = new Date(scheduleResponse.dates[0].date);
-    d.setDate(-1)
-    return d;
+    // otherwise use yesterday
+    scheduleDate.setDate(-1)
+    return scheduleDate;
   });
   
   function allGamesFinished( scheduleResponse: { dates: any; } ) {
