@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export default eventHandler(async () => ({
         daily: await getStatsForLeague({ daily: true }),
         season: await getStatsForLeague({}),
@@ -7,8 +9,7 @@ async function getStatsForLeague(params: any) {
     const tmpStats : any = {};
     let url = '';
     if (params?.daily) {
-      let date = await getDayToUseForToday();
-      let dateStr = formatDate(date);
+      let dateStr = await getDayToUseForToday();
       url = `https://statsapi.mlb.com/api/v1/stats?startDate=${dateStr}&endDate=${dateStr}&stats=byDateRange&group=hitting,pitching&playerPool=all&sportId=1&limit=5000`;
       console.log(url);
     }
@@ -45,14 +46,15 @@ const getDayToUseForToday = ( async () => {
     const scheduleURL = 'https://statsapi.mlb.com/api/v1/schedule?sportId=1';
     let scheduleResponseRaw = (await fetch(scheduleURL));
     let scheduleResponse = await scheduleResponseRaw.json();
-    let scheduleDate = new Date(scheduleResponse.dates[0].date);
+    console.log(scheduleResponse);
     // use the current schedule date if any games are in progress or if all the games are finished
     if (scheduleResponse.totalGamesInProgress > 0 || allGamesFinished(scheduleResponse)) {
-      return scheduleDate;
+      return scheduleResponse.dates[0].date;
     }
     // otherwise use yesterday
-    scheduleDate.setDate(-1)
-    return scheduleDate;
+    let scheduleDate = moment(scheduleResponse.dates[0].date);
+    scheduleDate.subtract('1','day');
+    return scheduleDate.format('YYYY-MM-DD')
   });
   
   function allGamesFinished( scheduleResponse: { dates: any; } ) {
@@ -78,10 +80,4 @@ const getDayToUseForToday = ( async () => {
     return true;
   }
   
-  function formatDate(date: Date) {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      
-      return `${year}-${month}-${day}`;
-  }
+  
