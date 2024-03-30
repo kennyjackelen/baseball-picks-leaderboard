@@ -1,23 +1,23 @@
 import moment from "moment";
 
-export default eventHandler(async () => ({
-  daily: await getStatsForLeague({ daily: true }),
-  season: await getStatsForLeague({}),
-}));
+export default eventHandler(async () => {
+  let daily;
+  let season;
+  await Promise.all([
+    getTodayStats().then( stats => { daily = stats; } ),
+    getSeasonStats().then( stats => { season = stats; } ),
+  ])
+  return { daily, season };
+});
 
-async function getStatsForLeague(params: any) {
+async function json(url : string) {
+  let raw = await fetch(url);
+  return await raw.json();
+}
+
+async function getSeasonStats() {
   const tmpStats: any = {};
-  let url = '';
-  if (params?.daily) {
-    let dateStr = await getDayToUseForToday();
-    url = `https://statsapi.mlb.com/api/v1/stats?startDate=${dateStr}&endDate=${dateStr}&stats=byDateRange&group=hitting,pitching&playerPool=all&sportId=1&limit=5000`;
-    console.log(url);
-  }
-  else {
-    url = `https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting,pitching&playerPool=all&sportId=1&limit=5000`;
-  }
-  let mlbResponseRaw = await fetch(url);
-  let mlbResponse = await mlbResponseRaw.json();
+  let mlbResponse = await json(`https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting,pitching&playerPool=all&sportId=1&limit=5000`);
   let hitters = mlbResponse.stats.find((x: { group: { displayName: string; }; }) => x.group.displayName === 'hitting').splits;
   let pitchers = mlbResponse.stats.find((x: { group: { displayName: string; }; }) => x.group.displayName === 'pitching').splits;
 
@@ -41,20 +41,52 @@ async function getStatsForLeague(params: any) {
   return tmpStats;
 }
 
+async function getTodayStats() {
+  const tmpStats: any = {};
+  const gamePks : any[] = await getGames();
+  let promises = [];
+  for ( let gamePk of gamePks ) {
+    promises.push( json(`https://statsapi.mlb.com/api/v1.1/game/${gamePk}/feed/live`) );
+  }
+  await Promise.allSettled(promises);
+  for ( let promise of promises ) {
+    let gumbo = await promise;
+    let boxscore = gumbo.liveData.boxscore;
+    for ( let team of Object.values(boxscore.teams) ) {;
+      for ( let gumboPlayer of Object.values((team as any).players) ) {
+        let playerID = (gumboPlayer as any).person.id;
+        let gumboStats : any = (gumboPlayer as any).stats;
+        let player = tmpStats[playerID];
+        if (!player) {
+          player = { HR: 0, SB: 0, SO: 0 };
+        }
+        player.HR += gumboStats.batting.homeRuns;
+        player.SB += gumboStats.batting.stolenBases;
+        player.SO += gumboStats.pitching.strikeOuts;
+        tmpStats[playerID] = player;
+      }
+    }
+  }
+  return tmpStats;
+}
 
-const getDayToUseForToday = (async () => {
-  const scheduleURL = 'https://statsapi.mlb.com/api/v1/schedule?sportId=1';
-  let scheduleResponseRaw = (await fetch(scheduleURL));
-  let scheduleResponse = await scheduleResponseRaw.json();
-  console.log(scheduleResponse);
-  // use the current schedule date if any games are in progress or if all the games are finished
+const getSchedule = (async () => {
+  let scheduleResponse = await json('https://statsapi.mlb.com/api/v1/schedule?sportId=1');
+  // use the current schedule if any games are in progress or if all the games are finished
   if (scheduleResponse.totalGamesInProgress > 0 || allGamesFinished(scheduleResponse)) {
-    return scheduleResponse.dates[0].date;
+    return scheduleResponse.dates[0];
   }
   // otherwise use yesterday
   let scheduleDate = moment(scheduleResponse.dates[0].date);
   scheduleDate.subtract('1', 'day');
-  return scheduleDate.format('YYYY-MM-DD')
+  let yesterday = scheduleDate.format('YYYY-MM-DD')
+  scheduleResponse = await json(`https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=${yesterday}`);
+  return scheduleResponse.dates[0];
+});
+
+const getGames = (async () => {
+  let schedule = await getSchedule();
+  return schedule.games.map( ( x : any ) => x.gamePk );
 });
 
 function allGamesFinished(scheduleResponse: { dates: any; }) {
