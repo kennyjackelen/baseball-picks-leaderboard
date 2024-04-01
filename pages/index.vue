@@ -355,10 +355,37 @@ const picks = [
 { "name": "Drew Smyly", "key_mlbam": "592767", "team_id": "CHC", "price": 70 },
 { "name": "Génesis Cabrera", "key_mlbam": "650893", "team_id": "TOR", "price": 63 },
 { "name": "Sem Robberse", "key_mlbam": "691828", "team_id": "STL", "price": 6 }
+] },
+] },
+{ "manager": "Paul", "picks": [
+{ "stat": "HR", "players": [
+{ "name": "Mike Trout", "key_mlbam": "545361", "team_id": "LAA", "price": 36 },
+{ "name": "Vladimir Guerrero Jr.", "key_mlbam": "665489", "team_id": "TOR", "price": 35 },
+{ "name": "Luis Robert Jr.", "key_mlbam": "673357", "team_id": "CHW", "price": 33 },
+{ "name": "Bryce Harper", "key_mlbam": "547180", "team_id": "PHI", "price": 29 },
+{ "name": "Jose Altuve", "key_mlbam": "514888", "team_id": "HOU", "price": 26 },
+{ "name": "William Contreras", "key_mlbam": "661388", "team_id": "MIL", "price": 24 },
+{ "name": "Hunter Renfroe", "key_mlbam": "592669", "team_id": "KCR", "price": 17 }
+] },
+{
+"stat": "SB", "players": [
+{ "name": "Julio Rodríguez", "key_mlbam": "677594", "team_id": "SEA", "price": 32 },
+{ "name": "Nico Hoerner", "key_mlbam": "663538", "team_id": "CHC", "price": 29 },
+{ "name": "Trevor Story", "key_mlbam": "596115", "team_id": "BOS", "price": 23 },
+{ "name": "Luis Robert Jr.", "key_mlbam": "673357", "team_id": "CHW", "price": 19 },
+{ "name": "Brice Turang", "key_mlbam": "668930", "team_id": "MIL", "price": 17 }
+] },
+{ "stat": "SO", "players": [
+{ "name": "Luis Castillo", "key_mlbam": "622491", "team_id": "SEA", "price": 205 },
+{ "name": "Tarik Skubal", "key_mlbam": "669373", "team_id": "DET", "price": 198 },
+{ "name": "Hunter Greene", "key_mlbam": "668881", "team_id": "CIN", "price": 196 },
+{ "name": "Taijuan Walker", "key_mlbam": "592836", "team_id": "PHI", "price": 135 },
+{ "name": "Steven Wilson", "key_mlbam": "621051", "team_id": "CHW", "price": 66 }
 ] }
 ] }
 
 ];
+
 
 
 const statsRef = (await useFetch('/api/stats')).data;
