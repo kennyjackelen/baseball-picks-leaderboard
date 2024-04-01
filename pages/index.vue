@@ -3,9 +3,9 @@
     class=" text-gray-800 dark:text-white relative flex flex-col min-h-screen py-10"
   >
     <div class="lg:grid lg:grid-cols-3 lg:gap-4 lg:w-full ">
-        <Leaderboard class="max-w-[36rem] mb-16 mx-auto lg:mx-0" title="Home Runs" statKey="HR" :sortedList="sortedByHR"/>
-        <Leaderboard class="max-w-[36rem] mb-16 mx-auto lg:mx-0" title="Stolen Bases" statKey="SB" :sortedList="sortedBySB"/>
-        <Leaderboard class="max-w-[36rem] mx-auto lg:mx-0" title="Strikeouts" statKey="SO" :sortedList="sortedBySO"/>
+        <Leaderboard class="max-w-[36rem] mb-16 mx-auto lg:mx-0" title="Home Runs" statKey="HR" :sortedList="sortedByHR" :isYesterday="statsRef?.isYesterday" />
+        <Leaderboard class="max-w-[36rem] mb-16 mx-auto lg:mx-0" title="Stolen Bases" statKey="SB" :sortedList="sortedBySB" :isYesterday="statsRef?.isYesterday" />
+        <Leaderboard class="max-w-[36rem] mx-auto lg:mx-0" title="Strikeouts" statKey="SO" :sortedList="sortedBySO" :isYesterday="statsRef?.isYesterday" />
     </div>
   </main>
 </template>
@@ -360,7 +360,9 @@ const picks = [
 
 ];
 
-const stats = (await useFetch('/api/stats')).data.value;
+
+const statsRef = (await useFetch('/api/stats')).data;
+const stats = statsRef.value;
 
 for ( let entry of picks ) {
   for ( let pick of entry.picks ) {

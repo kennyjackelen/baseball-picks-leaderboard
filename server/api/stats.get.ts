@@ -1,13 +1,14 @@
-import moment from "moment";
+import moment from "moment-timezone";
 
 export default eventHandler(async () => {
   let daily;
-  let season;
+  let season : any;
+  let isYesterday = false;
   await Promise.all([
-    getTodayStats().then( stats => { daily = stats; } ),
+    getTodayStats().then( result => { ({ daily, isYesterday } = result); } ),
     getSeasonStats().then( stats => { season = stats; } ),
   ])
-  return { daily, season };
+  return { daily, season, isYesterday };
 });
 
 async function json(url : string) {
@@ -43,7 +44,7 @@ async function getSeasonStats() {
 
 async function getTodayStats() {
   const tmpStats: any = {};
-  const gamePks : any[] = await getGames();
+  const { gamePks, isYesterday } = await getGames();
   let promises = [];
   for ( let gamePk of gamePks ) {
     promises.push( json(`https://statsapi.mlb.com/api/v1.1/game/${gamePk}/feed/live`) );
@@ -67,7 +68,7 @@ async function getTodayStats() {
       }
     }
   }
-  return tmpStats;
+  return { daily : tmpStats, isYesterday };
 }
 
 const getSchedule = (async () => {
@@ -86,7 +87,10 @@ const getSchedule = (async () => {
 
 const getGames = (async () => {
   let schedule = await getSchedule();
-  return schedule.games.map( ( x : any ) => x.gamePk );
+  return {
+    gamePks: schedule.games.map( ( x : any ) => x.gamePk ),
+    isYesterday: ( schedule.date !== moment().tz("America/Chicago").format('YYYY-MM-DD') )
+  }
 });
 
 function allGamesFinished(scheduleResponse: { dates: any; }) {

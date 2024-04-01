@@ -2,7 +2,7 @@
   <section>
     <h1 class="text-center uppercase font-bold text-3xl">{{ title }}</h1>
     <div v-for="entry of sortedList" class="m-4">
-      <LeaderboardEntry :entry="entry" :statKey="statKey" />
+      <LeaderboardEntry :entry="entry" :statKey="statKey" :isYesterday="isYesterday" />
     </div>
   </section>
 </template>
@@ -12,6 +12,7 @@
 
 const { title, statKey, sortedList } = defineProps({
   title: String,
+  isYesterday: Boolean,
   statKey: {
     type: String,
     required: true

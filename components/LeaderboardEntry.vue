@@ -10,7 +10,7 @@
     </div>
     <div class="text-xs font-normal text-right">
       <span class="pt-2 inline-block text-[#59D185] text-xs font-normal my-auto" v-if="entry.picks.find( x => x.stat === statKey)?.todayTotal">
-      +{{ entry.picks.find( x => x.stat === statKey)?.todayTotal }} today
+      +{{ entry.picks.find( x => x.stat === statKey)?.todayTotal }} {{ isYesterday ? 'yesterday' : 'today' }}
       </span>
     </div>
     <div class="font-bold text-2xl text-center ">
@@ -59,6 +59,7 @@ type Entry = {
 };
 
 const { entry } = defineProps({
+  isYesterday: Boolean,
   entry: {
     type: Object as PropType<Entry>,
     required: true
