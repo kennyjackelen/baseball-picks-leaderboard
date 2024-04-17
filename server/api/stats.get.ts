@@ -61,9 +61,9 @@ async function getTodayStats() {
         if (!player) {
           player = { HR: 0, SB: 0, SO: 0 };
         }
-        player.HR += gumboStats.batting.homeRuns;
-        player.SB += gumboStats.batting.stolenBases;
-        player.SO += gumboStats.pitching.strikeOuts;
+        player.HR += gumboStats.batting.homeRuns || 0;
+        player.SB += gumboStats.batting.stolenBases || 0;
+        player.SO += gumboStats.pitching.strikeOuts || 0;
         tmpStats[playerID] = player;
       }
     }
