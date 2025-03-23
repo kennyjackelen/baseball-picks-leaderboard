@@ -1,12 +1,14 @@
 import moment from "moment-timezone";
 
-export default eventHandler(async () => {
+export default eventHandler(async (event) => {
+  const { year } = getQuery(event)
+  const yearNum = Number(year)
   let daily;
   let season : any;
   let isYesterday = false;
   await Promise.all([
-    getTodayStats().then( result => { ({ daily, isYesterday } = result); } ),
-    getSeasonStats().then( stats => { season = stats; } ),
+    getTodayStats(yearNum).then( result => { ({ daily, isYesterday } = result); } ),
+    getSeasonStats(yearNum).then( stats => { season = stats; } ),
   ])
   return { daily, season, isYesterday };
 });
@@ -16,9 +18,14 @@ async function json(url : string) {
   return await raw.json();
 }
 
-async function getSeasonStats() {
+async function getSeasonStats(year?: number) {
+  if (!year) {
+    year = (new Date()).getFullYear();
+  }
   const tmpStats: any = {};
-  let mlbResponse = await json(`https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting,pitching&playerPool=all&sportId=1&limit=5000`);
+  const url = `https://statsapi.mlb.com/api/v1/stats?stats=season&season=${year}&group=hitting,pitching&playerPool=all&sportId=1&limit=5000`;
+  console.log(url);
+  let mlbResponse = await json(url);
   let hitters = mlbResponse.stats.find((x: { group: { displayName: string; }; }) => x.group.displayName === 'hitting').splits;
   let pitchers = mlbResponse.stats.find((x: { group: { displayName: string; }; }) => x.group.displayName === 'pitching').splits;
 
@@ -42,7 +49,10 @@ async function getSeasonStats() {
   return tmpStats;
 }
 
-async function getTodayStats() {
+async function getTodayStats(year : Number) {
+  if (year && year != (new Date()).getFullYear()) {
+    return { daily : {}, isYesterday: false };
+  }
   const tmpStats: any = {};
   const { gamePks, isYesterday } = await getGames();
   let promises = [];
@@ -72,7 +82,7 @@ async function getTodayStats() {
 }
 
 const getSchedule = (async () => {
-  let scheduleResponse = await json('https://statsapi.mlb.com/api/v1/schedule?sportId=1');
+  let scheduleResponse = await json('https://statsapi.mlb.com/api/v1/schedule?sportId=1&gameType=R');
   // use the current schedule if any games are in progress or if all the games are finished
   if (scheduleResponse.totalGamesInProgress > 0 || allGamesFinished(scheduleResponse)) {
     return scheduleResponse.dates[0];
@@ -81,15 +91,17 @@ const getSchedule = (async () => {
   let scheduleDate = moment(scheduleResponse.dates[0].date);
   scheduleDate.subtract('1', 'day');
   let yesterday = scheduleDate.format('YYYY-MM-DD')
-  scheduleResponse = await json(`https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=${yesterday}`);
+  scheduleResponse = await json(`https://statsapi.mlb.com/api/v1/schedule?sportId=1&gameType=R&date=${yesterday}`);
   return scheduleResponse.dates[0];
 });
 
 const getGames = (async () => {
   let schedule = await getSchedule();
+  let gamePks = schedule?.games.map( ( x : any ) => x.gamePk ) || [];
+  let isYesterday = ( schedule?.date !== moment().tz("America/Chicago").format('YYYY-MM-DD') ) || false;
   return {
-    gamePks: schedule.games.map( ( x : any ) => x.gamePk ),
-    isYesterday: ( schedule.date !== moment().tz("America/Chicago").format('YYYY-MM-DD') )
+    gamePks,
+    isYesterday,
   }
 });
 
