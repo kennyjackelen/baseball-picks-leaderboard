@@ -201,7 +201,7 @@
     { "name": "Mason Adams", "key_mlbam": "690279", "team_id": "CHW", "price": 19 },
   ]}
 ]},
-{ "manager": "Jimmy", "picks": [
+{ "manager": "Ryan L", "picks": [
   { "stat": "HR", "players": [
     { "name": "Kyle Schwarber", "key_mlbam": "656941", "team_id": "PHI", "price": 37 },
     { "name": "Brent Rooker", "key_mlbam": "667670", "team_id": "ATH", "price": 34 },
@@ -300,17 +300,126 @@
     { "name": "Jake Eder", "key_mlbam": "671109", "team_id": "CHW", "price": 11 },
   ]}
 ]},
-{ "manager": "Charlie", "picks": [
+{ "manager": "Jimmy", "picks": [
   { "stat": "HR", "players": [
-
+    { "name": "Bryce Harper", "key_mlbam": "547180", "team_id": "PHI", "price": 29 },
+    { "name": "José Ramírez", "key_mlbam": "608070", "team_id": "CLE", "price": 28 },
+    { "name": "Kyle Tucker", "key_mlbam": "663656", "team_id": "CHC", "price": 27 },
+    { "name": "Cody Bellinger", "key_mlbam": "641355", "team_id": "NYY", "price": 23 },
+    { "name": "Max Muncy", "key_mlbam": "571970", "team_id": "LAD", "price": 20 },
+    { "name": "Jhonkensy Noel", "key_mlbam": "678877", "team_id": "CLE", "price": 14 },
+    { "name": "Austin Hays", "key_mlbam": "669720", "team_id": "CIN", "price": 13 },
+    { "name": "Andrew Benintendi", "key_mlbam": "643217", "team_id": "CHW", "price": 12 },
+    { "name": "Lenyn Sosa", "key_mlbam": "672820", "team_id": "CHW", "price": 11 },
+    { "name": "Gio Urshela", "key_mlbam": "570482", "team_id": "ATH", "price": 7 },
+    { "name": "Jacob Young", "key_mlbam": "696285", "team_id": "WSN", "price": 5 },
+    { "name": "Blaze Alexander", "key_mlbam": "677942", "team_id": "ARI", "price": 3 },
+    { "name": "Jake Bauers", "key_mlbam": "641343", "team_id": "MIL", "price": 2 },
+    { "name": "Marcelo Mayer", "key_mlbam": "691785", "team_id": "BOS", "price": 1 },
+    { "name": "Greg Jones", "key_mlbam": "675659", "team_id": "COL", "price": 1 },
+    { "name": "Austin Martin", "key_mlbam": "668885", "team_id": "MIN", "price": 1 },
+    { "name": "Tyler Heineman", "key_mlbam": "623168", "team_id": "TOR", "price": 1 },
+    { "name": "Luis Guillorme", "key_mlbam": "641645", "team_id": "HOU", "price": 1 },
+    { "name": "Yuli Gurriel", "key_mlbam": "493329", "team_id": "SDP", "price": 1 },
   ]},
   { "stat": "SB", "players": [
-
+    { "name": "Bryce Harper", "key_mlbam": "547180", "team_id": "PHI", "price": 29 },
+    { "name": "José Ramírez", "key_mlbam": "608070", "team_id": "CLE", "price": 28 },
+    { "name": "Kyle Tucker", "key_mlbam": "663656", "team_id": "CHC", "price": 27 },
+    { "name": "Cody Bellinger", "key_mlbam": "641355", "team_id": "NYY", "price": 23 },
+    { "name": "Max Muncy", "key_mlbam": "571970", "team_id": "LAD", "price": 20 },
+    { "name": "Jhonkensy Noel", "key_mlbam": "678877", "team_id": "CLE", "price": 14 },
+    { "name": "Austin Hays", "key_mlbam": "669720", "team_id": "CIN", "price": 13 },
+    { "name": "Andrew Benintendi", "key_mlbam": "643217", "team_id": "CHW", "price": 12 },
+    { "name": "Lenyn Sosa", "key_mlbam": "672820", "team_id": "CHW", "price": 11 },
+    { "name": "Gio Urshela", "key_mlbam": "570482", "team_id": "ATH", "price": 7 },
+    { "name": "Jacob Young", "key_mlbam": "696285", "team_id": "WSN", "price": 5 },
+    { "name": "Blaze Alexander", "key_mlbam": "677942", "team_id": "ARI", "price": 3 },
+    { "name": "Jake Bauers", "key_mlbam": "641343", "team_id": "MIL", "price": 2 },
+    { "name": "Marcelo Mayer", "key_mlbam": "691785", "team_id": "BOS", "price": 1 },
+    { "name": "Greg Jones", "key_mlbam": "675659", "team_id": "COL", "price": 1 },
+    { "name": "Austin Martin", "key_mlbam": "668885", "team_id": "MIN", "price": 1 },
+    { "name": "Tyler Heineman", "key_mlbam": "623168", "team_id": "TOR", "price": 1 },
+    { "name": "Luis Guillorme", "key_mlbam": "641645", "team_id": "HOU", "price": 1 },
+    { "name": "Yuli Gurriel", "key_mlbam": "493329", "team_id": "SDP", "price": 1 },
+    { "name": "CJ Abrams", "key_mlbam": "682928", "team_id": "WSN", "price": 35 },
+    { "name": "Jackson Chourio", "key_mlbam": "694192", "team_id": "MIL", "price": 25 },
+    { "name": "Lawrence Butler", "key_mlbam": "671732", "team_id": "ATH", "price": 18 },
+    { "name": "Jonathan India", "key_mlbam": "663697", "team_id": "KCR", "price": 12 },
+    { "name": "Chandler Simpson", "key_mlbam": "802415", "team_id": "TBR", "price": 11 },
+    { "name": "Tommy Pham", "key_mlbam": "502054", "team_id": "PIT", "price": 9 },
+    { "name": "Jonatan Clase", "key_mlbam": "682729", "team_id": "TOR", "price": 4 },
+    { "name": "José Fermín", "key_mlbam": "665877", "team_id": "STL", "price": 3 },
+    { "name": "Jake Burger", "key_mlbam": "669394", "team_id": "TEX", "price": 2 },
+    { "name": "Daz Cameron", "key_mlbam": "663662", "team_id": "BAL", "price": 1 },
   ]},
   { "stat": "SO", "players": [
-
+    { "name": "Logan Gilbert", "key_mlbam": "669302", "team_id": "SEA", "price": 208 },
+    { "name": "Aaron Nola", "key_mlbam": "605400", "team_id": "PHI", "price": 185 },
+    { "name": "Framber Valdez", "key_mlbam": "664285", "team_id": "HOU", "price": 177 },
+    { "name": "Devin Williams", "key_mlbam": "642207", "team_id": "NYY", "price": 80 },
+    { "name": "Alex Vesia", "key_mlbam": "681911", "team_id": "LAD", "price": 71 },
+    { "name": "Connor Thomas", "key_mlbam": "671162", "team_id": "MIL", "price": 39 },
+    { "name": "Eiberson Castellano", "key_mlbam": "682769", "team_id": "MIN", "price": 35 },
+    { "name": "Roki Sasaki", "key_mlbam": "808963", "team_id": "LAD", "price": 1 },
+    { "name": "Zach Franklin", "key_mlbam": "702103", "team_id": "CHW", "price": 1 },
+    { "name": "Phil Bickford", "key_mlbam": "641360", "team_id": "CHC", "price": 1 },
+    { "name": "Cade Horton", "key_mlbam": "690990", "team_id": "CHC", "price": 1 },
+    { "name": "Anderson Pilar", "key_mlbam": "666768", "team_id": "MIA", "price": 1 },
   ]}
-]}
+]},
+{ "manager": "Christian", "picks": [
+  { "stat": "HR", "players": [
+    { "name": "Pete Alonso", "key_mlbam": "624413", "team_id": "NYM", "price": 35 },
+    { "name": "Austin Riley", "key_mlbam": "663586", "team_id": "ATL", "price": 30 },
+    { "name": "Elly De La Cruz", "key_mlbam": "682829", "team_id": "CIN", "price": 25 },
+    { "name": "Ryan McMahon", "key_mlbam": "641857", "team_id": "COL", "price": 21 },
+    { "name": "Ozzie Albies", "key_mlbam": "645277", "team_id": "ATL", "price": 20 },
+    { "name": "Christopher Morel", "key_mlbam": "666624", "team_id": "TBR", "price": 19 },
+    { "name": "Anthony Volpe", "key_mlbam": "683011", "team_id": "NYY", "price": 17 },
+    { "name": "Jeremy Peña", "key_mlbam": "665161", "team_id": "HOU", "price": 16 },
+    { "name": "Jordan Walker", "key_mlbam": "691023", "team_id": "STL", "price": 15 },
+    { "name": "Vidal Bruján", "key_mlbam": "660644", "team_id": "CHC", "price": 2 },
+  ]},
+  { "stat": "SB", "players": [
+    { "name": "Brenton Doyle", "key_mlbam": "686668", "team_id": "COL", "price": 26 },
+    { "name": "Jackson Chourio", "key_mlbam": "694192", "team_id": "MIL", "price": 25 },
+    { "name": "Pete Crow-Armstrong", "key_mlbam": "691718", "team_id": "CHC", "price": 23 },
+    { "name": "Oneil Cruz", "key_mlbam": "665833", "team_id": "PIT", "price": 17 },
+    { "name": "Michael Harris II", "key_mlbam": "671739", "team_id": "ATL", "price": 17 },
+    { "name": "Jonathan India", "key_mlbam": "663697", "team_id": "KCR", "price": 12 },
+  ]},
+  { "stat": "SO", "players": [
+    { "name": "Sandy Alcantara", "key_mlbam": "645261", "team_id": "MIA", "price": 170 },
+    { "name": "José Berríos", "key_mlbam": "621244", "team_id": "TOR", "price": 166 },
+    { "name": "Luis Severino", "key_mlbam": "622663", "team_id": "ATH", "price": 159 },
+    { "name": "Merrill Kelly", "key_mlbam": "518876", "team_id": "ARI", "price": 141 },
+    { "name": "Shane Baz", "key_mlbam": "669358", "team_id": "TBR", "price": 140 },
+    { "name": "Kyle Bradish", "key_mlbam": "680694", "team_id": "BAL", "price": 24 },
+  ]}
+]},
+{ "manager": "Charlie", "picks": [
+  { "stat": "HR", "players": [
+    { "name": "Vladimir Guerrero Jr.", "key_mlbam": "665489", "team_id": "TOR", "price": 33 },
+    { "name": "Juan Soto", "key_mlbam": "665742", "team_id": "NYM", "price": 32 },
+    { "name": "Bobby Witt Jr.", "key_mlbam": "677951", "team_id": "KCR", "price": 29 },
+    { "name": "Jackson Chourio", "key_mlbam": "694192", "team_id": "MIL", "price": 27 },
+    { "name": "Corey Seager", "key_mlbam": "608369", "team_id": "TEX", "price": 26 },
+    { "name": "Jazz Chisholm Jr.", "key_mlbam": "665862", "team_id": "NYY", "price": 26 },
+    { "name": "Royce Lewis", "key_mlbam": "668904", "team_id": "MIN", "price": 24 },
+    { "name": "Chase Meidroth", "key_mlbam": "805367", "team_id": "CHW", "price": 3 },
+  ]},
+  { "stat": "SB", "players": [
+    { "name": "Elly De La Cruz", "key_mlbam": "682829", "team_id": "CIN", "price": 51 },
+    { "name": "CJ Abrams", "key_mlbam": "682928", "team_id": "WSN", "price": 35 },
+    { "name": "Brice Turang", "key_mlbam": "668930", "team_id": "MIL", "price": 34 },
+  ]},
+  { "stat": "SO", "players": [
+    { "name": "Paul Skenes", "key_mlbam": "694973", "team_id": "PIT", "price": 241 },
+    { "name": "Tarik Skubal", "key_mlbam": "669373", "team_id": "DET", "price": 228 },
+    { "name": "Pablo López", "key_mlbam": "641154", "team_id": "MIN", "price": 202 },
+  ]}
+]},
     ],
     '2024': [
   { "manager": "Kenny", "picks": [
