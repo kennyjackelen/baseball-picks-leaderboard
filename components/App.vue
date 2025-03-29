@@ -361,6 +361,7 @@
     { "name": "Alex Vesia", "key_mlbam": "681911", "team_id": "LAD", "price": 71 },
     { "name": "Connor Thomas", "key_mlbam": "671162", "team_id": "MIL", "price": 39 },
     { "name": "Eiberson Castellano", "key_mlbam": "682769", "team_id": "MIN", "price": 35 },
+    { "name": "Touki Toussaint", "key_mlbam": "657053", "team_id": "", "price": 1 },
     { "name": "Zach Franklin", "key_mlbam": "702103", "team_id": "CHW", "price": 1 },
     { "name": "Phil Bickford", "key_mlbam": "641360", "team_id": "CHC", "price": 1 },
     { "name": "Cade Horton", "key_mlbam": "690990", "team_id": "CHC", "price": 1 },
