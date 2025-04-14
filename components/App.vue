@@ -80,7 +80,7 @@
 { "name": "Kevin Kelly", "key_mlbam": "687330", "team_id": "TBR", "price": 36 },
 { "name": "Bradley Blalock", "key_mlbam": "687134", "team_id": "COL", "price": 31 },
 { "name": "Luis García", "key_mlbam": "472610", "team_id": "LAD", "price": 30 },
-{ "name": "Logan Allen", "key_mlbam": "663531", "team_id": "CLE", "price": 30 },
+{ "name": "Logan Allen", "key_mlbam": "671106", "team_id": "CLE", "price": 30 },
 { "name": "Sean Newcomb", "key_mlbam": "656794", "team_id": "BOS", "price": 21 },
 { "name": "Gerson Garabito", "key_mlbam": "642520", "team_id": "TEX", "price": 17 },
 { "name": "Andrew Morris", "key_mlbam": "702193", "team_id": "MIN", "price": 11 },
