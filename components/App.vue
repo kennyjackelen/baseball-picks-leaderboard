@@ -74,7 +74,7 @@
 { "name": "Ben Brown", "key_mlbam": "676962", "team_id": "CHC", "price": 56 },
 { "name": "Carson Spiers", "key_mlbam": "686730", "team_id": "CIN", "price": 48 },
 { "name": "Carlos Carrasco", "key_mlbam": "471911", "team_id": "NYY", "price": 47 },
-{ "name": "Tyler Alexander", "key_mlbam": "622066", "team_id": "MIL", "price": 46 },
+{ "name": "Tyler Alexander", "key_mlbam": "641302", "team_id": "MIL", "price": 46 },
 { "name": "Valente Bellozo", "key_mlbam": "678368", "team_id": "MIA", "price": 37 },
 { "name": "Ryan Borucki", "key_mlbam": "621366", "team_id": "PIT", "price": 36 },
 { "name": "Kevin Kelly", "key_mlbam": "687330", "team_id": "TBR", "price": 36 },
